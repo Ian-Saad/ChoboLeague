@@ -1,0 +1,143 @@
+// Contributors: CornMuscles, Guluheend(Ian Saad)
+
+//These are the names that are ALWAYS SHOWN.  Add in the following manner ["Forum Name","Twitch Name"]
+var alwaysOn = [
+["ChoboTeamLeague","ChoboTeamLeague"]
+, ["Seeker","SeekerSC2"]
+, ["Metalcore","metalcore1993"]
+, ["Redentor","redentorsc"]
+, ["tbham","tbham"]
+];
+
+//These are the names that are NOT ALWAYS SHOWN.
+var notAlwaysOn = [
+["Inc","incontroltv"]
+, ["Indaend","indaend"]
+, ["HeavyArms","imorion"]
+, ["Bozz","jonbozz"]
+, ["Meristematic","meristematic"]
+, ["Shockfox","shockfox"]
+, ["Msyu","teamur_msyu"]
+, ["LVMatterhorn","lvmatterhorn"]
+, ["rei","pikaporeon"]
+, ["Invencible","invencible92"]
+, ["fish","superfluousfish"]
+, ["Saber","Saber_sc2"]
+, ["Danimal","danimal481"]
+, ["AwkwardWiz","awkwardgeneration"]
+, ["Space","spaceroach"]
+, ["NinKazi","ninkazi"]
+, ["Vital","vital_sc2"]
+, ["Puddle","heartless168"]
+, ["WreckingBall","moralitypts"]
+, ["Beard","beardrag"]
+, ["Yaki","YakiSC"]
+, ["Mahavishnu","mahavishnu1"]
+, ["Xilogh","xilogh"]
+, ["Kami","imbateatime"]
+, ["Cyber Wizard","Codemuncher"]
+, ["sinistar_lives","sinistartv"]
+, ["Vash","vash888"]
+, ["ngutun","ngutun"]
+, ["Ador","heromuta"]
+, ["SpiderHawk","spiderhawk"]
+, ["siFu","xsifu"]
+, ["qball12","qball12"]
+, ["happybythree","happybythree"]
+, ["Senka","vexon13"]
+, ["RandAlThor","zombiesmasher3"]
+, ["Smithy","smithyns"]
+, ["Coffee","cofffeeee"]
+, ["Matgopack","matgopack"]
+, ["ShadoeWolf","ShadoeWolf"]
+, ["DinoDan","DGPHDinoDan"]
+, ["Demosthenes","demosthenes131313"]
+, ["shpoom","shpooom"]
+, ["HantyPen","hantypensc2"]
+, ["Yuppi","orryborry"]
+, ["Guluheend","thirstygulu"]
+, ["Heat","heat023"]
+, ["Crux315","cruxsc2"]
+, ["Hollywood","ES_Hollywood"]
+, ["Team Rival Gaming","teamrivalgaming"]
+, ["tacowtf (All-In)","tacowtf"]
+, ["SanghoonSC","sanghoonsc"]
+, ["Anoteros","AnoterosTV"]
+, ["THATSAplusONE","eye_shine"]
+, ["MattTheKat","mattthekat"]
+, ["OMF2097","omf2097"]
+, ["NorthQuab","northquab"]
+, ["Free","befreetv"]
+, ["SandBoXx","SandBoXx224"]
+, ["Punish","PunishThePlayer"]
+, ["BossTerran", "Bossterran"]
+, ["Padula", "padula88"]
+, ["Theraxis", "theraxis"]
+, ["Exothermic", "bogoradwee"]
+, ["blizzfreak", "blizzfreak"]
+, ["PolarBoy", "sc2weekly"]
+, ["CornMuscles","CornMuscles"]
+, ["kali","kalistream"]
+, ["Jester","thequeensjester"]
+, ["Zavahl","zavahl"]
+, ["Flubz","major_flubz"]
+, ["Akerasi","akerasi"]
+];
+
+var string = " ";
+var twitch = " ";
+var api_key= "seg30bf5k0rbnbq1z8qyb9usxyp5a34";
+
+//Check for streams that should always be shown
+for (var q=0; q<alwaysOn.length;q++) 
+{
+	//window.alert(alwaysOn[q][0]+' '+ alwaysOn[q][1]);
+    checkStreamCast(alwaysOn[q][0], alwaysOn[q][1], true);
+	//window.alert(alwaysOn[q][0]+' '+ alwaysOn[q][1]);
+}
+
+//Check for streams that will not always be shown.
+for (var j=0; j<notAlwaysOn.length;j++) 
+{
+    checkStreamCast(notAlwaysOn[j][0], notAlwaysOn[j][1], false);
+	//	window.alert(alwaysOn[j][0]+' '+ alwaysOn[j][1]);
+
+}
+//Check to see if Twitch stream is live
+//ForumID = CTL Forum ID of the streamer
+//TwitchID = Twitch ID / Stream name of the streamer
+//Shows = True - will always show,    False - only shows if live.
+
+function checkStreamCast(ForumID, TwitchID, Shows) 
+{        
+        //api_key = "seg30bf5k0rbnbq1z8qyb9usxyp5a34";
+
+        $.getJSON('https://api.twitch.tv/kraken/streams/' + TwitchID + '?client_id=' + api_key + '&callback=?', function(data) { 
+           if (data.stream) 
+		   {			
+		   
+			twitch = "<a href='http://www.twitch.tv/" + TwitchID +"'>" + ForumID + "</a>";
+			string = "<span class='online'></span>" + twitch + "<br>";
+			CreateSpan(ForumID, string);	
+           } else {
+				if(Shows){
+				//offline do nothing!
+				twitch = "<a href='http://www.twitch.tv/" + TwitchID +"'>" + ForumID + "</a>";
+				string = "<span class='offline'></span>" + twitch + "<br>";
+				CreateSpan(ForumID, string);
+				}
+           }  
+        });
+
+}
+
+function CreateSpan(strSpanID, strHTML)
+{
+	var spanTag = document.createElement("span");  
+    spanTag.id = strSpanID;            
+	spanTag.innerHTML = strHTML  
+    //document.body.appendChild(spanTag); 
+	document.getElementById('foo3036').appendChild(spanTag);
+}
+
+
